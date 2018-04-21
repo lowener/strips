@@ -5,10 +5,11 @@ import sys
 def fct_parser(line):
     name = line[:line.find('(')]
     rest_of_the_line = line[line.find(')') + 1:]
+    rest_of_the_line = rest_of_the_line.strip(', ')
     line=line[line.find('(') + 1:line.find(')')]
     args=line.split(',')
     args = [a.strip(' ') for a in args]
-    return name, args, line
+    return name, args, rest_of_the_line
 
 def parser(f):
     l = f.readline()
@@ -16,15 +17,10 @@ def parser(f):
     init_state=[]
     if words[0] == "Initial" and words[1] == "state:":
         words = words[2:]
-        for i in words:
-            init_state.append((i[:i.find('(')], i[(i.find('(')+1):(i.find(')'))]))
-
-            ''' Make clean function
-        init_state.clear()
         new_line = ' '.join(words)
         while len(new_line) :
             name, args, new_line = fct_parser(new_line)
-        init_state.append((name, args))'''
+            init_state.append((name, args))
 
     return init_state
 
