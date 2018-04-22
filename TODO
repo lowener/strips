@@ -1,0 +1,10 @@
+Pour l'instant la classe state semble correct, et permet de représenter
+le combo predicat + argument
+
+Pour la classe Action, il faut travailler sur la partie apply_backward pour
+pouvoir appliquer une action a un state avec les argument. Il faut remplacer
+les "variables" de l'action par l'argument que l'on passe.
+
+Il faut travailler sur la boucle principal. Le but est d'avoir une Queue des
+possibilités (state, action, argument), et de faire varier les actions et les
+argument pour trouver le bon state.
