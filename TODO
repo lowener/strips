@@ -8,3 +8,6 @@ les "variables" de l'action par l'argument que l'on passe.
 Il faut travailler sur la boucle principal. Le but est d'avoir une Queue des
 possibilités (state, action, argument), et de faire varier les actions et les
 argument pour trouver le bon state.
+
+
+#### FIX L'UPDATE DU STATE ####
