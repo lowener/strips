@@ -12,22 +12,14 @@ class Action:
         self.postconditions = []
         self.name = name.strip('_')
         self.literals = literals
-
-    def apply_backward(self, state, args):
-        # Check that all post-conditions are validated
-        for i in self.postconditions:
-            if not state.get(i):
-                return False
-        # Do a step backward
-        for i in self.preconditions:
-            state.update(i)
-        return True
+        #self.real_literals = literals
 
     def get_literals(self):
         return self.literals
 
     def apply_literals(self, literals):
-        new_action = Action(self.name, self.literals)
+        new_action = Action(self.name, literals)
+        #new_action.real_literals = literals
         for precond in self.preconditions:
             new_lit = []
             for lit in precond[1]:
@@ -50,6 +42,22 @@ class Action:
 
         return new_action
 
+    def generate_state_backward(self, state):
+        for st in state.get_states():
+            if st[0].startswith('not'):
+                st[0] = ' '.join(st[0].split(' ')[1:])
+
+            found = False
+            for postcond in self.postconditions:
+                if postcond[0] == st[0]:
+                    found = True
+
+            if not found:
+                yield st
+
+        for st in self.preconditions:
+            yield st
+
     def add_preconditions(self, preconds):
         self.preconditions.append(preconds)
 
@@ -66,3 +74,6 @@ class Action:
         print(self.name, self.literals)
         print(self.preconditions)
         print(self.postconditions)
+
+    def print_name(self):
+        print("{}({})".format(self.name, ', '.join(x for x in self.literals)))

@@ -1,3 +1,4 @@
+from state import State
 import queue
 import copy
 import itertools as it
@@ -14,10 +15,25 @@ def reverse_decision(current_state, actions, init, goal):
             good_actions = actions_that_satisfy_state_backward(actions, current_state, init, goal)
             new_states = []
             for act in good_actions:
-                actions_to_state[1].append(act)
-                new_states.append(((copy.deepcopy(current_state)).update(act.get_preconditions()), actions_to_state[1]))
+                chain_ac = copy.deepcopy(actions_to_state[1])
+                chain_ac.append(act)
+
+                #new_st = list(act.generate_state_backward(current_state))
+                #print(new_st)
+                #input()
+                new_st = State(list(act.generate_state_backward(current_state)))
+                new_st.print()
+                #input()
+                new_states.append((new_st,
+                    #(copy.deepcopy(current_state)).update_backward(act),
+                    chain_ac))
 
             for st in new_states:
+                for ac in st[1]:
+                    ac.print_name()
+                st[0].print()
+
+                #input()
                 if is_satisfiying_state(st[0], init):
                     return st
 
@@ -37,8 +53,15 @@ def get_literals(init, goal):
 
 def is_satisfiying_state(curr_state, goal):
     for state in goal:
-        if not curr_state.contains(state):
-            return False
+        print(state)
+        if state[0].startswith('not'):
+            cp_state = list(state)
+            cp_state[0] = ' '.join(state[0].split(' ')[1:])
+            if curr_state.contains(tuple(cp_state)):
+                return False
+        else:
+            if not curr_state.contains(state):
+                return False
     return True
 
 def actions_that_satisfy_state_backward(listAction, state, init, goal):
