@@ -1,3 +1,5 @@
+import copy
+
 '''
     Represents an Action
     It has:
@@ -12,7 +14,6 @@ class Action:
         self.postconditions = []
         self.name = name.strip('_')
         self.literals = literals
-        #self.real_literals = literals
 
     def get_literals(self):
         return self.literals
@@ -58,6 +59,18 @@ class Action:
         for st in self.preconditions:
             yield st
 
+    def generate_state_forward(self, state):
+        new_state = copy.deepcopy(state)
+        for st in self.postconditions:
+            if st[0].startswith('not'):
+                l_st = list(st)
+                l_st[0] = ' '.join(l_st[0].split(' ')[1:])
+                new_state.remove_state(tuple(l_st))
+            else:
+                new_state.add_state(st)
+
+        return new_state
+
     def add_preconditions(self, preconds):
         self.preconditions.append(preconds)
 
@@ -77,3 +90,10 @@ class Action:
 
     def print_name(self):
         print("{}({})".format(self.name, ', '.join(x for x in self.literals)))
+
+def is_state_present(state, conds):
+    for cond in conds:
+        if state[0] == cond[0]:
+            return True
+
+    return False

@@ -20,6 +20,12 @@ class State:
         self.states = new_states
         return self
 
+    def remove_state(self, state):
+        self.states.remove(state)
+
+    def add_state(self, state):
+        self.states.append(state)
+
     def get_states(self):
         return self.states
 
