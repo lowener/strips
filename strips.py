@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     current_state = State(init)
     res = forward_decision(current_state, actions, init, goal)
-    print(res)
+    #print(res)
     for i in res[1]:
         i.print_name()
     print("Final state: ")

@@ -5,4 +5,4 @@ Actions:
                // Move a disk from source to dest
                Move(Disk, Source, Dest)
                Preconditions: Clear(Disk), On(Disk, Source), Clear(Dest), Smaller(Disk, Dest)
-               Postconditions: On(Disk, Dest), !On(Disk, Source), !Clear(Dest), Clear(Source)
+               Postconditions: On(Disk, Dest), not On(Disk, Source), not Clear(Dest), Clear(Source)

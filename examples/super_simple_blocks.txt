@@ -3,21 +3,21 @@ Goal state:     BlockAt(A, Tower2), On(A, B)
 
 Actions:
         Go(From, To)
-        Preconditions: At(From), !At(To)
-        Postconditions: At(To), !At(From)
+        Preconditions: At(From), not At(To)
+        Postconditions: At(To), not At(From)
 
         PlaceOn(Block1, Block2, Tower)
         Preconditions: At(Tower), Holding(Block1), BlockAt(Block2, Tower), OnTop(Block2)
-        Postconditions: !Holding(Block1), !OnTop(Block2), BlockAt(Block1, Tower), OnTop(Block1), On(Block1, Block2)
+        Postconditions: not Holding(Block1), not OnTop(Block2), BlockAt(Block1, Tower), OnTop(Block1), On(Block1, Block2)
 
         PlaceOnEmpty(Block1, Tower)
         Preconditions: At(Tower), Holding(Block1), Empty(Tower)
-        Postconditions: !Holding(Block1), OnTop(Block1), BlockAt(Block1, Tower), OnBottom(Block1), !Empty(Tower)
+        Postconditions: not Holding(Block1), OnTop(Block1), BlockAt(Block1, Tower), OnBottom(Block1), not Empty(Tower)
 
         PickUp(Block1, Block2, Tower)
         Preconditions: At(Tower), OnTop(Block1), BlockAt(Block1, Tower), On(Block1, Block2)
-        Postconditions: Holding(Block1), !OnTop(Block1), !BlockAt(Block1, Tower), !On(Block1, Block2), OnTop(Block2)
+        Postconditions: Holding(Block1), not OnTop(Block1), not BlockAt(Block1, Tower), not On(Block1, Block2), OnTop(Block2)
 
         PickUpLast(Block1, Tower)
         Preconditions: At(Tower), BlockAt(Block1, Tower), OnTop(Block1), OnBottom(Block1)
-        Postconditions: Holding(Block1), !BlockAt(Block1, Tower), !OnTop(Block1), !OnBottom(Block1), Empty(Tower)
+        Postconditions: Holding(Block1), not BlockAt(Block1, Tower), not OnTop(Block1), not OnBottom(Block1), Empty(Tower)

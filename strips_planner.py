@@ -18,22 +18,15 @@ def reverse_decision(current_state, actions, init, goal):
                 chain_ac = copy.deepcopy(actions_to_state[1])
                 chain_ac.insert(0, act)
 
-                #new_st = list(act.generate_state_backward(current_state))
-                #print(new_st)
-                #input()
                 new_st = State(list(act.generate_state_backward(current_state)))
                 new_st.print()
-                #input()
-                new_states.append((new_st,
-                    #(copy.deepcopy(current_state)).update_backward(act),
-                    chain_ac))
+                new_states.append((new_st, chain_ac))
 
             for st in new_states:
                 for ac in st[1]:
                     ac.print_name()
                 st[0].print()
 
-                #input()
                 if is_satisfiying_state(st[0], init):
                     return st
 
@@ -51,6 +44,12 @@ def forward_decision(current_state, actions, init, goal):
         try:
             actions_to_state = state_queue.get(False)
             current_state = actions_to_state[0]
+
+            print("-------------------------------")
+            for a in actions_to_state[1]:
+                a.print_name()
+            print("-------------------------------")
+
             good_actions = actions_that_satisfy_state_forward(actions, current_state, init, goal)
             new_states = []
             for act in good_actions:
